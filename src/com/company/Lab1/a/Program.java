@@ -18,6 +18,13 @@ class SharedValue {
     }
 
     public synchronized void moveSlider(int value) {
+        if (this.slider.getValue() + value < 10){
+            return;
+        }
+        else if (this.slider.getValue() + value > 90){
+            return;
+        }
+
         this.slider.setValue(this.slider.getValue() + value);
     }
 
@@ -40,7 +47,7 @@ class CustomThread implements Runnable {
 
     @Override
     public void run() {
-        System.out.println(Thread.currentThread().getName() + " start " + value);
+        System.out.println(Thread.currentThread().getName() + " started with value " + value);
 
         boolean isInterrupted = false;
         while (!isInterrupted) {
@@ -54,7 +61,7 @@ class CustomThread implements Runnable {
             }
         }
 
-        System.out.println(Thread.currentThread().getName() + " end ");
+        System.out.println(Thread.currentThread().getName() + " ended");
     }
 }
 
@@ -110,8 +117,8 @@ public class Program {
         slider.setEnabled(false);
 
         slider.setValue(50);
-        slider.setMinimum(10);
-        slider.setMaximum(90);
+        /*slider.setMinimum(10);
+        slider.setMaximum(90);*/
 
         Thread1IncrPrior = new JButton("First Prior +");
         Thread1DecrPrior = new JButton("First Prior -");
@@ -131,6 +138,9 @@ public class Program {
         startBtn.addActionListener(e -> {
             Thread1 = new Thread(new CustomThread(sliderData, -1));
             Thread2 = new Thread(new CustomThread(sliderData, 1));
+
+            Thread1.setDaemon(true);
+            Thread2.setDaemon(true);
 
             Thread1.setPriority(5);
             Thread2.setPriority(5);

@@ -17,7 +17,7 @@ class SharedValue {
         this.slider = slider;
     }
 
-    public synchronized void modify(int value) {
+    public synchronized void changeSlider(int value) {
         this.slider.setValue(value);
     }
 
@@ -46,7 +46,7 @@ class CustomThread implements Runnable {
 
         while (!isInterrupted) {
 
-            sharedValue.modify(value);
+            sharedValue.changeSlider(value);
 
             try {
                 Thread.sleep(0, 1);
@@ -99,6 +99,8 @@ public class Program {
             case 1:{
                 Thread1 = new Thread(new CustomThread(data, 10));
 
+                Thread1.setDaemon(true);
+
                 Thread1.setPriority(1);
 
                 Thread1.start();
@@ -111,6 +113,8 @@ public class Program {
             }
             case 2:{
                 Thread2 = new Thread(new CustomThread(data, 90));
+
+                Thread2.setDaemon(true);
 
                 Thread2.setPriority(10);
 
