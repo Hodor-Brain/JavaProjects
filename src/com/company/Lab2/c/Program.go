@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-const numberOfMonks = 1e3
+const numberOfMonks = 1e5
 
 type Monk struct {
 	energy    int
@@ -18,7 +18,7 @@ var initialArray []Monk
 func generateRandomArray() {
 	rand.Seed(int64(time.Now().Second()))
 	for i := 0; i < numberOfMonks; i++ {
-		initialArray = append(initialArray, Monk{rand.Intn(10000) + 1, rand.Intn(2)})
+		initialArray = append(initialArray, Monk{rand.Intn(1000000) + 1, rand.Intn(2)})
 	}
 }
 
