@@ -11,7 +11,7 @@ class Bee implements Runnable{
     public void run() {
         while(true){
             try {
-                if(honeyPot.getTimesDrink() == 7){
+                if(honeyPot.getTimesDrink() == 10){
                     break;
                 }
                 honeyPot.fillPot();
@@ -90,7 +90,7 @@ class Winnie implements Runnable{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if(honeyPot.getTimesDrink() == 7){
+            if(honeyPot.getTimesDrink() == 10){
                 break;
             }
         }
