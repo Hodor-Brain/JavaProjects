@@ -1,11 +1,13 @@
 package com.company.Module1;
 
 import java.util.Random;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static java.lang.Thread.sleep;
+
 class Exchange {
+    private final Lock lock = new ReentrantLock();
     public static int CompaniesNumber = 5;
 
     public static Company companies[] = new Company[CompaniesNumber];
@@ -14,7 +16,39 @@ class Exchange {
 
     public static int Index = 100;
 
-    public Exchange(){};
+    public Exchange(){
+        for(int i = 0; i < CompaniesNumber; i++){
+            companies[i] = new Company();
+        }
+    }
+
+    public boolean getEndWork(){
+        return EndWork;
+    }
+
+    public void changeIndex(){
+        lock.lock();
+        try {
+            Random random = new Random();
+            int temp = random.nextInt(3);
+            if(temp == 0){
+                int change = random.nextInt((int)Index / 4);
+                Index = Index + change;
+                if ((int)Index / 5 <= change){
+                    EndWork = true;
+                }
+            }
+            else if(temp == 1){
+                int change = random.nextInt((int)Index / 4);
+                Index = Index - change;
+                if ((int)Index / 5 <= change){
+                    EndWork = true;
+                }
+            }
+        } finally {
+            lock.unlock();
+        }
+    }
 }
 
 class Company {
@@ -35,8 +69,8 @@ class Company {
 
         try {
             Random random = new Random();
-            int temp1 = random.nextInt((int)price / 3);
-            int temp2 = random.nextInt((int)price / 3);
+            int temp1 = random.nextInt((int)price / 5);
+            int temp2 = random.nextInt((int)price / 5);
             this.price = price - temp1 + temp2;
         } finally {
             lock.unlock();
@@ -52,7 +86,7 @@ class Broker implements Runnable {
     public int stock;
 
     public Broker(Exchange exc, int i){
-        exchange = exc;
+        this.exchange = exc;
         id = i;
 
         Random random = new Random();
@@ -61,19 +95,26 @@ class Broker implements Runnable {
         this.company = exc.companies[random.nextInt(exc.CompaniesNumber)];
     }
 
-    public void sellStock(){
+    public void trySellStock(){
         Random random = new Random();
-        int temp = random.nextInt(stock + 1);
-        this.stock = stock - temp;
 
-        System.out.println("Broker " + this.id + "sold" + temp + "stock with total price " + temp * company.getPrice());
+        if (random.nextInt(5) == 0){
+            int temp = random.nextInt(stock + 1);
+            this.stock = stock - temp;
+
+            company.changePrice();
+            exchange.changeIndex();
+
+            System.out.println("Broker " + this.id + " sold " + temp + " stock with total price " + temp * company.getPrice());
+        }
     }
 
     @Override
     public void run() {
         while (!exchange.EndWork) {
             try {
-                sellStock();
+                trySellStock();
+                sleep(500);
             } catch (Exception e){
 
             }
@@ -82,9 +123,20 @@ class Broker implements Runnable {
 }
 
 class Program {
-
+    public static Exchange exchange = new Exchange();
     public static void init() throws InterruptedException {
+        Broker brokers[] = new Broker[10];
 
+        for(int i = 0; i < brokers.length; i++){
+            brokers[i] = new Broker(exchange, i);
+            Thread thread = new Thread(brokers[i]);
+            thread.start();
+        }
+
+        long startTime = System.nanoTime() / 1000000;
+        while (System.nanoTime() / 1000000 - startTime < 10000 && !exchange.getEndWork()){}
+
+        sleep(1000);
     }
 
     public static void main(String[] args) throws InterruptedException {
