@@ -13,6 +13,7 @@ public class FileInteractor {
         this.lock = new ReadWriteLock();
         try {
             this.output = new ObjectOutputStream(new FileOutputStream(fileName, true));
+            clearFile();
         } catch (IOException ex) {
             ex.printStackTrace();
         }

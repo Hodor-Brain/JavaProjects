@@ -316,7 +316,6 @@ func addDeleteRoutesThread(citiesGraph *GraphWithLock) {
 }
 
 func addDeleteCitiesThread(citiesGraph *GraphWithLock) {
-	citiesGraph.addCity("IvanoNefrankivsk")
 	citiesGraph.addCity("Varash")
 	citiesGraph.addCity("Lugansk")
 	citiesGraph.removeCity("Rivne")
