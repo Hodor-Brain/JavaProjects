@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="WINDOWS-1251" standalone="no"?>
+<MovieStore>
+    <Genre id="1" name="Horror"/>
+    <Genre id="2" name="Comedy"/>
+    <Genre id="3" name="Thriller"/>
+    <Genre id="4" name="Fantasy"/>
+</MovieStore>
