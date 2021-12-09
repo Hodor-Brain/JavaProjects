@@ -7,7 +7,7 @@ import java.util.List;
 public class MovieStoreDAO {
     private final Connection connection;
 
-    MovieStoreDAO() throws ClassNotFoundException, SQLException {
+    public MovieStoreDAO() throws ClassNotFoundException, SQLException {
         Class.forName("org.postgresql.Driver");
         final String user = "postgres";
         final String password = "14062002";
@@ -308,7 +308,7 @@ public class MovieStoreDAO {
     }
 
 
-    private int getGenreId(String name) {
+    public int getGenreId(String name) {
         PreparedStatement statement;
 
         try {
@@ -327,7 +327,7 @@ public class MovieStoreDAO {
     }
 
 
-    private Genre getGenreById(int id) {
+    public Genre getGenreById(int id) {
         PreparedStatement statement;
 
         try {

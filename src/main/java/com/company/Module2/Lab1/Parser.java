@@ -110,6 +110,7 @@ public class Parser {
         if (root == null)
             return null;
 
+
         Element movieStore;
 
         if (root.getTagName().equals(MOVIE_STORE)) {

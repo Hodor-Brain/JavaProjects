@@ -3,7 +3,7 @@ package com.company.Module2.Lab2;
 import java.sql.SQLException;
 
 public class Main {
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+    public static void main(String[] args) throws Exception {
         MovieStoreDAO movieStore = new MovieStoreDAO();
 
         Genre comedy = new Genre("Comedy");
@@ -26,38 +26,23 @@ public class Main {
 //        movieStore.addFilm(film4);
 //        movieStore.addFilm(film5);
 
+//        Film film = new Film("Extra film", 5f, new Genre("Horror"));
+//        movieStore.addFilm(film);
+
+//        Film film = movieStore.getFilmByName("Extra film");
+//        Film newFilm = new Film("RENAMED", 2f, movieStore.getGenreById(movieStore.getGenreId("Fantasy")));
+//////
+//        movieStore.updateFilm(film, newFilm);
+
+        movieStore.deleteFilm("RENAMED");
+
+//        movieStore.deleteGenre("Comedy");
 
 
-//        System.out.println("Before");
-//        movieStore.showGenres();
-//        movieStore.deleteGenre("Action");
-//        movieStore.updateGenre("Fantasy", new Genre("Documentary"));
-//
-//        System.out.println("After");
-//        movieStore.showGenres();
 
-//        movieStore.showGenres();
-//        movieStore.showFilms();
-
-//        Genre documentary =  new Genre(2, "Documentary");
-
-//        movieStore.addGenre(documentary);
-
-//        movieStore.addFilm(new Film("Harry", 1.4f, documentary));
-//        movieStore.addFilm(new Film("Harry1", 1.4f, documentary));
-//        movieStore.addFilm(new Film("Harry2", 1.4f, documentary));
-
-        // movieStore.deleteGenre("Documentary");
         movieStore.showGenres();
         movieStore.showFilms();
 
-//        System.out.println( movieStore.getNumberOfFilmsByGenre("Documentary"));
-//
-//        for(Film film : movieStore.getFilmsByGenre("Documentary")) {
-//            System.out.println(film);
-//        }
-//
-//        movieStore.showGenres();
 
         movieStore.stop();
     }

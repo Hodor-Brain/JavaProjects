@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="WINDOWS-1251" standalone="no"?>
+<MovieStore>
+    <Genre id="1" name="Horror">
+        <Film duration="1.2" id="4" name="Very scary film"/>
+    </Genre>
+    <Genre id="2" name="Comedy">
+        <Film duration="2.34" id="2" name="Friends"/>
+        <Film duration="2.34" id="3" name="Dumb and Dumber"/>
+    </Genre>
+    <Genre id="4" name="Fantasy"/>
+</MovieStore>
